@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Button } from 'antd'
+import { Input, Button, Collapse } from 'antd'
 import { Companies } from './Companies'
 
 export const Rating = () => {
@@ -12,21 +12,26 @@ export const Rating = () => {
         setRating(Rating => [...Rating, newRating])
     }
 
-    return (
-        <div>
-            <h3>Rating</h3>
-            <Input ref={RatingRef} placeholder='Rating Value' />
-            <Button onClick={() => addRating()} type='primary'>Add</Button>
-            {
-                Rating.map((e) => {
-                    return <div>
-                        <p>{e}</p>
-                        <Companies/>
-                    </div>
-                })
-            }
-        </div>
-       
+    const items = Rating.map((e, i) => {
+        return {
+            key: i,
+            label: e,
+            children: <Companies />,
+        }
+    })
 
+    return (
+        <div className='w-full flex flex-col items-center'>
+            <h3>Rating</h3>
+            <div className='w-3/6 '>
+                <div className='w-full flex flex-col justify-center gap-2'>
+                    <Input className='w-full' ref={RatingRef} placeholder='Rating Value' />
+                    <Button className='w-full bg-blue-700 text-white' onClick={() => addRating()} type='primary'>Add</Button>
+                </div>
+                <div className='p-5'>
+                    <Collapse  items={items} bordered={Rating.length === 0 ? false : true} defaultActiveKey={[0]} />
+                </div>
+            </div>
+        </div>
     )
 }
