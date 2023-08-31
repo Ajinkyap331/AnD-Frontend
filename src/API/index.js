@@ -3,7 +3,7 @@ import axios from "axios";
 // create companies API
 export const createCompanies = async ({ data }) => {
   try {
-    const response = await axios.post("/api/company/create", data);
+    const response = await axios.post("/api/company/create", { name: data });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -39,7 +39,7 @@ export const updateCompany = async ({ id, data }) => {
     // Prepare Send Data
     const sendData = {
       id: id,
-      data: data,
+      name: data,
     };
 
     const response = await axios.put(`/api/company/update`, sendData);
@@ -53,6 +53,7 @@ export const updateCompany = async ({ id, data }) => {
 // Delete Company Data
 export const deleteCompany = async ({ id }) => {
   try {
+    console.log(id);
     const response = await axios.delete(`/api/company/delete/${id}`);
     return response.data;
   } catch (error) {

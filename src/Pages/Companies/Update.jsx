@@ -35,6 +35,7 @@ const CompanyUpdate = () => {
           <Input
             value={name}
             onChange={(input) => {
+              console.log(input.target.value);
               setName(input.target.value);
             }}
             className="w-full border-1 border-black"
