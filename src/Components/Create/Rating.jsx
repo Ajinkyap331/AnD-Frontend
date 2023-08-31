@@ -19,21 +19,7 @@ export const Rating = ({ rating, cat_number, index }) => {
 
     const addRating = () => {
 
-        // Refernce of the object you want to update
-        let cat = catalog.find(e => e.catalog_number === cat_number)
-
-        console.log(cat)
-
-        // pushing new data in rating
-        cat = { ...cat, rating: [...cat.rating, { rating_value: RatingRef.current.input.value, companies: [] }] }
-
-        console.log(cat)
-
-
-        catalog = catalog.filter(e => e.catalog_number !== cat_number)
-
-
-        dispatch(mainActions.setCatalog([...catalog, cat]))
+        dispatch(mainActions.setRatings({ index: index, rating: { rating_value: RatingRef.current.input.value, companies: [] } }))
 
     }
 
@@ -55,11 +41,13 @@ export const Rating = ({ rating, cat_number, index }) => {
             key: i,
             label: e.rating_value,
             children: <>
-                <div onClick={() => setRating(_.remove(Rating, (_, k) => { return k !== i }))} className='cursor-pointer bg-blue-700 w-fit p-3 rounded-xl text-white flex gap-1 items-center'>
+                <div onClick={() => {
+                    dispatch(mainActions.deleteRating({ index: index, rating_index: i }))
+                }} className='cursor-pointer bg-blue-700 w-fit p-3 rounded-xl text-white flex gap-1 items-center'>
                     <Trash2 />
                     <p>Delete This Rating</p>
                 </div>
-                <Companies cat_number={cat_number} rating_value={e.rating_value} />
+                <Companies cat_index = {index} index = {i} companies = {e.companies} cat_number={cat_number} rating_value={e.rating_value} />
             </>
         }
     })

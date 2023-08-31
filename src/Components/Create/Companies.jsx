@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { Input, Button, Table } from 'antd'
 import lo from 'lodash'
 import { useSelector, useDispatch } from 'react-redux'
+import { mainActions } from '../../context/mainslice'
 
-export const Companies = ({ cat_number, rating_value }) => {
+export const Companies = ({ index, cat_index, companies, cat_number, rating_value }) => {
     const [Company, setCompany] = useState([])
     const CompanyRef = React.useRef(null)
     const priceRef = React.useRef(null)
@@ -15,26 +16,20 @@ export const Companies = ({ cat_number, rating_value }) => {
     console.log(cat_number, rating_value)
     console.log(catalog)
 
+    
     const addCompany = () => {
         const newCompany = {
+            key: companies.length,
             company_id: CompanyRef.current.input.value,
             price: priceRef.current.input.value,
             discount: discountRef.current.input.value
         }
-
-        let newCatalog = catalog.find(e => e.catalog_number === cat_number);
-        let newRating = newCatalog.rating.find(e => e.rating_value === rating_value)
-        newRating = { ...newRating, companies: [...newRating.companies, newCompany] }
-
-        companies.push(newCompany)
-        console.log(companies)
-        setTrigger({ value: rating_value, company: companies })
-        setCompany(Company => [...Company, newCompany])
-        console.log(Company)
+        
+        dispatch(mainActions.setCompanies({ index: cat_index, rating_index: index, company: newCompany }))
     }
 
 
-    console.log(Company)
+    console.log(companies)
 
     const columns = [
         {
@@ -55,7 +50,9 @@ export const Companies = ({ cat_number, rating_value }) => {
             title: 'Action',
             // dataIndex: 'action',
             render: (_, record) => (
-                <Button onClick={() => setCompany(Company.filter((com) => { return com.company_id !== record.company_id }))} >Delete</Button>
+                <Button onClick={() => {
+                    dispatch(mainActions.deleteCompany({ index: cat_index, rating_index: index, company_index: record.key }))
+                }} >Delete</Button>
             )
 
         }
@@ -70,7 +67,7 @@ export const Companies = ({ cat_number, rating_value }) => {
                 <Input className='w-fit' ref={discountRef} placeholder='Discount' />
                 <Button className='bg-blue-700 text-white' onClick={() => addCompany()} type='primary'>Add</Button>
             </div>
-            <Table className='mt-2' dataSource={Company} columns={columns} />
+            <Table className='mt-2' dataSource={companies} columns={columns} />
         </div>
 
 

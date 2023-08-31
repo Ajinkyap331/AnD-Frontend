@@ -18,7 +18,8 @@ const Create = () => {
     const addCatalog = () => {
         const newcatalog = catalogdescRef.current.input.value;
         catalogdescRef.current.input.value = "";
-        dispatch(mainActions.setCatalog([...catalog, { catalog_number: newcatalog, rating: [] }]))
+        dispatch(mainActions.addCatalog({ catalog_number: newcatalog, rating: [] }))
+        // dispatch(mainActions.setCatalog([...catalog, { catalog_number: newcatalog, rating: [] }]))
     };
 
     console.log(catalog);
@@ -28,10 +29,12 @@ const Create = () => {
             key: i,
             label: e.catalog_number,
             children: <>
-                {/* <div onClick={() => setCatalog(_.remove(Catalog, (o) => { return o !== e }))} className='cursor-pointer bg-blue-700 w-fit p-3 rounded-xl text-white flex gap-1 items-center'>
+                <div onClick={() => {
+                    dispatch(mainActions.deleteCatalog(i))
+                } } className='cursor-pointer bg-blue-700 w-fit p-3 rounded-xl text-white flex gap-1 items-center'>
                     <Trash2 />
                     <p>Delete This Catalog</p>
-                </div> */}
+                </div>
                 <Rating rating={e.rating} cat_number = {e.catalog_number} index = {i} />
             </>,
 
