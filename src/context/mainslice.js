@@ -6,6 +6,9 @@ const mainSlice = createSlice({
         catalog: []
     },
     reducers: {
+        copyCatalog(state, action) {
+            state.catalog = action.payload
+        },
         addCatalog(state, action) {
             state.catalog.push(action.payload)
         },
@@ -22,8 +25,19 @@ const mainSlice = createSlice({
             state.catalog[action.payload.index].rating[action.payload.rating_index].companies.push(action.payload.company)
         },
         deleteCompany(state, action) {
-            state.catalog[action.payload.index].rating[action.payload.rating_index].companies = state.catalog[action.payload.index].rating[action.payload.rating_index].companies.filter((e, i) => { return e.key !== action.payload.company_index })
+            state.catalog[action.payload.index].rating[action.payload.rating_index].companies = state.catalog[action.payload.index].rating[action.payload.rating_index].companies.filter((e, i) => {
+                if (e.key) {
+                    return e.key !== action.payload.company_index
+                }
+                if (e._id) {
+                    return e._id !== action.payload._id
+                }
+            })
+        },
+        changeRatingValue(state, action) {
+            state.catalog[action.payload.index].rating[action.payload.rating_index].rating_value = action.payload.rating_value
         }
+
     }
 });
 

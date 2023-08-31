@@ -3,7 +3,9 @@ import Rating from "./Rating";
 import { Button, Collapse } from "antd";
 import { FileEdit } from "lucide-react";
 import { Input } from "antd";
-import Rating2 from "./Rating2";
+import { Rating2 } from "./Rating2";
+import { useDispatch } from "react-redux";
+import { mainActions } from "../../context/mainslice";
 
 
 export const Catalog = ({ data }) => {
@@ -11,6 +13,8 @@ export const Catalog = ({ data }) => {
 
   const [showInputDesc, setShowInputDesc] = React.useState(false);
   const [edit, setEdit] = React.useState(-1);
+
+  const dispatch = useDispatch();
 
   const items = data.catalog.map((e, i) => {
     return {
@@ -25,7 +29,7 @@ export const Catalog = ({ data }) => {
                   <Input />
                   <Button>Save</Button>
                 </div>
-                <Rating2 ratings={e.rating} />
+                <Rating2 cat_number = {e.catalog_number} index = {i} />
               </>
             ) : (
               <>
@@ -33,7 +37,10 @@ export const Catalog = ({ data }) => {
                   <p>{e.desc}</p>
                   <FileEdit
                     className="cursor-pointer"
-                    onClick={() => setEdit(i)}
+                      onClick={() => {
+                        setEdit(i)
+                        dispatch(mainActions.copyCatalog([e]))
+                      }}
                   />
                 </div>
                 <Rating ratings={e.rating} />
