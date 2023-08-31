@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { useDispatch, useSelector } from "react-redux";
 import { mainActions } from '../../context/mainslice'
 
-export const Rating = ({ cat_number, index }) => {
+export const Rating = ({ index }) => {
 
     const RatingRef = React.useRef(null)
 

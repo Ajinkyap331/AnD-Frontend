@@ -33,7 +33,7 @@ const Create = () => {
                     <Trash2 />
                     <p>Delete This Catalog</p>
                 </div>
-                <Rating rating={e.rating} cat_number={e.catalog_number} index={i} />
+                <Rating index={i} />
             </>,
 
         };
