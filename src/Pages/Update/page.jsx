@@ -3,7 +3,7 @@ import { getDataAll } from "../../API";
 import { Catalog } from "./Catalog";
 import { Input, Collapse } from "antd";
 
-const List = () => {
+const Update = () => {
   const [data, setData] = React.useState([]);
   const getData = async () => {
     const response = await getDataAll();
@@ -29,4 +29,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default Update;

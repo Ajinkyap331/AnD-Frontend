@@ -4,17 +4,12 @@ import lo from 'lodash'
 import { useSelector, useDispatch } from 'react-redux'
 import { mainActions } from '../../context/mainslice'
 
-export const Companies = ({ index, cat_index, companies, cat_number, rating_value }) => {
-    const [Company, setCompany] = useState([])
+export const Companies = ({ index, cat_index, companies}) => {
     const CompanyRef = React.useRef(null)
     const priceRef = React.useRef(null)
     const discountRef = React.useRef(null)
 
-    const catalog = useSelector((state) => state.main.catalog);
     const dispatch = useDispatch();
-
-    console.log(cat_number, rating_value)
-    console.log(catalog)
 
     
     const addCompany = () => {
@@ -48,7 +43,6 @@ export const Companies = ({ index, cat_index, companies, cat_number, rating_valu
             render: (text) => <p>{text}</p>,
         }, {
             title: 'Action',
-            // dataIndex: 'action',
             render: (_, record) => (
                 <Button onClick={() => {
                     dispatch(mainActions.deleteCompany({ index: cat_index, rating_index: index, company_index: record.key }))

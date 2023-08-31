@@ -15,14 +15,12 @@ const Create = () => {
     const catalog = useSelector((state) => state.main.catalog);
 
 
+
     const addCatalog = () => {
         const newcatalog = catalogdescRef.current.input.value;
         catalogdescRef.current.input.value = "";
         dispatch(mainActions.addCatalog({ catalog_number: newcatalog, rating: [] }))
-        // dispatch(mainActions.setCatalog([...catalog, { catalog_number: newcatalog, rating: [] }]))
     };
-
-    console.log(catalog);
 
     const items = catalog.map((e, i) => {
         return {
@@ -31,11 +29,11 @@ const Create = () => {
             children: <>
                 <div onClick={() => {
                     dispatch(mainActions.deleteCatalog(i))
-                } } className='cursor-pointer bg-blue-700 w-fit p-3 rounded-xl text-white flex gap-1 items-center'>
+                }} className='cursor-pointer bg-blue-700 w-fit p-3 rounded-xl text-white flex gap-1 items-center'>
                     <Trash2 />
                     <p>Delete This Catalog</p>
                 </div>
-                <Rating rating={e.rating} cat_number = {e.catalog_number} index = {i} />
+                <Rating rating={e.rating} cat_number={e.catalog_number} index={i} />
             </>,
 
         };
@@ -69,12 +67,14 @@ const Create = () => {
             <div className="w-full p-10 flex justify-center">
                 <Collapse
                     className="w-5/6"
-                    // bordered={Catalog.length === 0 ? false : true}
+                    bordered={catalog.length === 0 ? false : true}
                     items={items}
                     defaultActiveKey={[0]}
                 />
             </div>
-            <div onClick={() => console.log(Catalog)}>Send</div>
+            <div className="full flex justify-center">
+                <div className="w-fit bg-blue-600 text-white text-center rounded px-8 py-2" onClick={() => console.log(catalog)}>Create</div>
+            </div>
         </div>
     );
 };
