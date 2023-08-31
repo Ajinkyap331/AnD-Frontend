@@ -1,9 +1,26 @@
-import React from 'react'
+import React from "react";
+import { getDataAll } from "../../API";
+import { Catalog } from "./Catalog";
 
 const List = () => {
-    return (
-        <div>page</div>
-    )
-}
+  const [data, setData] = React.useState([]);
+  const getData = async () => {
+    const response = await getDataAll();
+    console.log(response.data);
+    setData(response.data);
+  };
 
-export default List
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  return (
+    <div>
+      {data.map((item) => {
+        return <Catalog key={item._id} data={item} />;
+      })}
+    </div>
+  );
+};
+
+export default List;
