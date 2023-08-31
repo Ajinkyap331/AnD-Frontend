@@ -1,22 +1,66 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input, Button, Collapse } from 'antd'
 import { Companies } from './Companies'
+import { Trash2 } from 'lucide-react'
+import _ from 'lodash'
+import { useDispatch, useSelector } from "react-redux";
+import { mainActions } from '../../context/mainslice'
 
-export const Rating = () => {
+export const Rating = ({ rating, cat_number, index }) => {
 
     const [Rating, setRating] = React.useState([])
+    const [trigger, setTrigger] = React.useState("")
     const RatingRef = React.useRef(null)
 
+    let catalog = useSelector((state) => state.main.catalog);
+    const dispatch = useDispatch();
+
+    console.log(catalog)
+
     const addRating = () => {
-        const newRating = RatingRef.current.input.value
-        setRating(Rating => [...Rating, newRating])
+
+        // Refernce of the object you want to update
+        let cat = catalog.find(e => e.catalog_number === cat_number)
+
+        console.log(cat)
+
+        // pushing new data in rating
+        cat = { ...cat, rating: [...cat.rating, { rating_value: RatingRef.current.input.value, companies: [] }] }
+
+        console.log(cat)
+
+
+        catalog = catalog.filter(e => e.catalog_number !== cat_number)
+
+
+        dispatch(mainActions.setCatalog([...catalog, cat]))
+
     }
 
-    const items = Rating.map((e, i) => {
+    useEffect(() => {
+        console.log(trigger)
+        if (trigger !== "") {
+            rating = Array.from(rating.filter((e) => { return e.rating_value !== trigger.value }))
+            // console.log(rating)
+            rating.push({ rating_value: trigger.value, companies: trigger.company })
+            // console.log(rating)
+        }
+        // setRating(rating)
+    }, [trigger])
+
+    console.log(rating)
+
+    const items = catalog[index].rating.map((e, i) => {
         return {
             key: i,
-            label: e,
-            children: <Companies />,
+            label: e.rating_value,
+            children: <>
+                <div onClick={() => setRating(_.remove(Rating, (_, k) => { return k !== i }))} className='cursor-pointer bg-blue-700 w-fit p-3 rounded-xl text-white flex gap-1 items-center'>
+                    <Trash2 />
+                    <p>Delete This Rating</p>
+                </div>
+                <Companies cat_number={cat_number} rating_value={e.rating_value} />
+            </>
         }
     })
 
@@ -29,7 +73,7 @@ export const Rating = () => {
                     <Button className='w-full bg-blue-700 text-white' onClick={() => addRating()} type='primary'>Add</Button>
                 </div>
                 <div className='p-5'>
-                    <Collapse  items={items} bordered={Rating.length === 0 ? false : true} defaultActiveKey={[0]} />
+                    <Collapse items={items} bordered={Rating.length === 0 ? false : true} defaultActiveKey={[0]} />
                 </div>
             </div>
         </div>
