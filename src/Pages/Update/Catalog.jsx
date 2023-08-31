@@ -1,11 +1,15 @@
 import React from "react";
 import Rating from "./Rating";
 import { Button, Collapse } from "antd";
-import { FileEdit } from "lucide-react";
-import { Input } from "antd";
+import { FileEdit, Trash } from "lucide-react";
+import { Input, message } from "antd";
 import { Rating2 } from "./Rating2";
 import { useDispatch } from "react-redux";
 import { mainActions } from "../../context/mainslice";
+import { deleteData } from "../../API";
+import { useNavigate } from "react-router-dom";
+import { deleteAllData } from "../../API";
+
 
 
 export const Catalog = ({ data }) => {
@@ -15,6 +19,7 @@ export const Catalog = ({ data }) => {
   const [edit, setEdit] = React.useState(-1);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const items = data.catalog.map((e, i) => {
     return {
@@ -29,7 +34,7 @@ export const Catalog = ({ data }) => {
                   <Input />
                   <Button>Save</Button>
                 </div>
-                <Rating2 cat_number = {e.catalog_number} index = {i} />
+                <Rating2 cat_number={e.catalog_number} index={i} />
               </>
             ) : (
               <>
@@ -37,11 +42,28 @@ export const Catalog = ({ data }) => {
                   <p>{e.desc}</p>
                   <FileEdit
                     className="cursor-pointer"
-                      onClick={() => {
-                        setEdit(i)
-                        dispatch(mainActions.copyCatalog([e]))
-                      }}
+                    onClick={() => {
+                      setEdit(i)
+                      dispatch(mainActions.copyCatalog([e]))
+                    }}
                   />
+                  <Trash onClick={async () => {
+                    try {
+                      const response = await deleteAllData({
+                        "type": 1,
+                        "id": data._id,
+                        "catalog_id": e._id
+                      })
+                      console.log(response)
+                      message.success("Successfully Deleted Data");
+                      navigate('/list')
+                    } catch (e) {
+                      console.log(e);
+                      message.error("Error");
+                    }
+
+                  }
+                  } />
                 </div>
                 <Rating ratings={e.rating} />
               </>
@@ -66,10 +88,27 @@ export const Catalog = ({ data }) => {
                 <Button>Save</Button>
               </div>
             ) : (
-              <FileEdit
-                className="cursor-pointer"
-                onClick={() => setShowInputDesc(true)}
-              />
+              <>
+
+                <FileEdit
+                  className="cursor-pointer"
+                  onClick={() => setShowInputDesc(true)}
+                />
+                <Trash onClick={async () => {
+
+                  try {
+                    const response = await deleteData(data._id)
+                    console.log(response)
+                    message.success("Successfully Deleted Data");
+                    navigate('/list')
+                  } catch (e) {
+                    console.log(e);
+                    message.error("Error");
+                  }
+
+                }
+                } />
+              </>
 
             )
           }

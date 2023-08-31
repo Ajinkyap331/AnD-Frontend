@@ -8,7 +8,7 @@ const List = () => {
   const getData = async () => {
     const response = await getDataAll();
     console.log(response.data);
-    setData(response.data);
+    setData(response.data.reverse());
   };
 
   React.useEffect(() => {
