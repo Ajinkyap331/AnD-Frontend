@@ -3,7 +3,7 @@ import axios from "axios";
 // create companies API
 export const createCompanies = async ({ data }) => {
   try {
-    const response = await axios.post("/api/companies/create", data);
+    const response = await axios.post("/api/company/create", data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -14,7 +14,7 @@ export const createCompanies = async ({ data }) => {
 // Get All Companies Data
 export const getCompanies = async () => {
   try {
-    const response = await axios.get("/api/companies/getAll");
+    const response = await axios.get("/api/company/getAll");
     return response.data;
   } catch (error) {
     console.log(error);
@@ -25,7 +25,7 @@ export const getCompanies = async () => {
 // Get One Company Data
 export const getCompany = async ({ id }) => {
   try {
-    const response = await axios.get(`/api/companies/getOne/${id}`);
+    const response = await axios.get(`/api/company/getOne/${id}`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -42,7 +42,7 @@ export const updateCompany = async ({ id, data }) => {
       data: data,
     };
 
-    const response = await axios.put(`/api/companies/update`, sendData);
+    const response = await axios.put(`/api/company/update`, sendData);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -53,7 +53,7 @@ export const updateCompany = async ({ id, data }) => {
 // Delete Company Data
 export const deleteCompany = async ({ id }) => {
   try {
-    const response = await axios.delete(`/api/companies/delete/${id}`);
+    const response = await axios.delete(`/api/company/delete/${id}`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -64,6 +64,7 @@ export const deleteCompany = async ({ id }) => {
 // Create Data API
 export const postDataCreate = async ({ data }) => {
   try {
+    console.log(data);
     const response = await axios.post("/api/data/create", data);
     return response.data;
   } catch (error) {
@@ -116,6 +117,17 @@ export const updateData = async ({ id, data, type }) => {
     };
 
     const response = await axios.put(`/api/data/update`, sendData);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+// Delete All Data API
+export const deleteAllData = async ({ data }) => {
+  try {
+    const response = await axios.put(`/api/data/delete`, data);
     return response.data;
   } catch (error) {
     console.log(error);
