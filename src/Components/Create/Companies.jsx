@@ -7,7 +7,7 @@ import { getCompanies } from "../../API";
 
 export const Companies = ({ index, cat_index, companies }) => {
   const [companiesData, setCompaniesData] = useState([]);
-  const CompanyRef = React.useRef(null);
+  const [company, setCompany] = useState("");
   const priceRef = React.useRef(null);
   const discountRef = React.useRef(null);
 
@@ -16,7 +16,7 @@ export const Companies = ({ index, cat_index, companies }) => {
   const addCompany = () => {
     const newCompany = {
       key: companies.length,
-      company_id: CompanyRef.current.input.value,
+      company_id: company,
       price: priceRef.current.input.value,
       discount: discountRef.current.input.value,
     };
@@ -40,7 +40,6 @@ export const Companies = ({ index, cat_index, companies }) => {
     getAllCompanies();
   }, []);
 
-  console.log(companiesData);
 
   const columns = [
     {
@@ -86,8 +85,10 @@ export const Companies = ({ index, cat_index, companies }) => {
       <div className="flex flex-col gap-5">
         <Select
           className="w-full"
-          ref={CompanyRef}
           placeholder="Company Id"
+          onChange={(e) => {
+            setCompany(e);
+          }}
           filterOption={(input, option) =>
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
           }

@@ -58,7 +58,6 @@ const Create = () => {
       };
 
       const response = await postDataCreate({ data: data });
-      console.log(response);
       if (response.message === "successfully created data") {
         message.success("Successfully Created the Description");
         navigate("/list");
