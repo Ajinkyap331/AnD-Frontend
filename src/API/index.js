@@ -96,7 +96,7 @@ export const getDataAll = async () => {
 
 // Delete Data API
 
-export const deleteData = async ({ id }) => {
+export const deleteData = async ( id ) => {
   try {
     const response = await axios.delete(`/api/data/delete/${id}`);
     return response.data;
@@ -125,7 +125,7 @@ export const updateData = async ({ id, data, type }) => {
 };
 
 // Delete All Data API
-export const deleteAllData = async ({ data }) => {
+export const deleteAllData = async ( data ) => {
   try {
     const response = await axios.put(`/api/data/delete`, data);
     return response.data;
