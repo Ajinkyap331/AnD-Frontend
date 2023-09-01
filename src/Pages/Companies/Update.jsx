@@ -13,7 +13,6 @@ const CompanyUpdate = () => {
         id: localStorage.getItem("companyId"),
         data: name,
       });
-      console.log(response);
       message.success("Successfully Updated company");
       navigate("/clist");
     } catch (e) {
@@ -35,7 +34,6 @@ const CompanyUpdate = () => {
           <Input
             value={name}
             onChange={(input) => {
-              console.log(input.target.value);
               setName(input.target.value);
             }}
             className="w-full border-1 border-black"

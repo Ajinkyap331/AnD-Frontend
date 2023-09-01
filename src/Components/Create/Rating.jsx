@@ -35,7 +35,7 @@ export const Rating = ({ cat_number, index }) => {
             }}
             className="cursor-pointer bg-blue-700 w-fit px-2 m-2 rounded-xl text-white flex gap-1 justify-center items-center hover:bg-blue-500"
           >
-            <Trash2 />
+            <Trash2 className="cursor-pointer" />
             <p className="p-2 font-semibold">Delete this Rating</p>
           </div>
           <Companies cat_index={index} index={i} companies={e.companies} />

@@ -37,7 +37,7 @@ const Create = () => {
             }}
             className="cursor-pointer bg-blue-700 w-fit px-2 rounded-xl text-white flex gap-1 items-center hover:bg-blue-500"
           >
-            <Trash2 />
+            <Trash2 className="cursor-pointer" />
             <p className="p-2 font-semibold">Delete this Catalog</p>
           </div>
           <Rating rating={e.rating} cat_number={e.catalog_number} index={i} />

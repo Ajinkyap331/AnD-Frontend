@@ -8,7 +8,6 @@ const CompanyList = () => {
   const [data, setData] = React.useState([]);
   const getData = async () => {
     const response = await getCompanies();
-    console.log(response.data);
     setData(response.data);
   };
   React.useEffect(() => {

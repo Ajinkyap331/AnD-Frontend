@@ -12,7 +12,6 @@ const CompanyCreate = () => {
       const response = await createCompanies({
         data: name,
       });
-      console.log(response);
       message.success("Successfully Created company");
       navigate("/clist");
     } catch (e) {

@@ -17,6 +17,12 @@ const Home = () => {
         Description List
       </Link>
       <Link
+        to="/update"
+        className="px-4 py-2 bg-blue-700 rounded text-white hover:bg-blue-500"
+      >
+        Update Description List
+      </Link>
+      <Link
         to="/company"
         className="px-4 py-2 bg-blue-700 rounded text-white hover:bg-blue-500"
       >

@@ -18,12 +18,10 @@ const List = () => {
   return (
     <div>
       <div className="w-screen p-2">
-        <h1 className="text-center text-2xl">Create</h1>
-        {
-          data.map((e, i) => {
-            return <Catalog data={e} />
-          })
-        }
+        <h1 className="text-center font-semibold text-2xl mt-10">List</h1>
+        {data.map((e, i) => {
+          return <Catalog data={e} />;
+        })}
       </div>
     </div>
   );
